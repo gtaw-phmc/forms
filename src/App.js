@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import './App.css';
-import myImage from './dmec_christmas.png';
 import Paperwork from './myPaperwork2.png';
 import Feedback from './feedback.png';
 
@@ -12,7 +11,7 @@ function App() {
         dateTime: '',
         coronerName: '',
         serialNumber: '',
-        decedentName: 'John Doe',
+        decedentName: '',
         pronouncedTimeOfDeath: '',
         synopsis: '',
         probableCauseOfDeath: '',
@@ -54,6 +53,21 @@ function App() {
                 return '';
         }
     };
+    function getBrowserName(userAgent) {
+        if (userAgent.includes("Chrome") && !userAgent.includes("Edg")) {
+            return "Google Chrome";
+        } else if (userAgent.includes("Safari") && !userAgent.includes("Chrome")) {
+            return "Safari";
+        } else if (userAgent.includes("Firefox")) {
+            return "Mozilla Firefox";
+        } else if (userAgent.includes("Edg")) {
+            return "Microsoft Edge";
+        } else if (userAgent.includes("MSIE") || userAgent.includes("Trident")) {
+            return "Internet Explorer";
+        } else {
+            return "Unknown Browser";
+        }
+    }
 
     const generateBBCode = () => {
         const {
@@ -128,6 +142,7 @@ This document is provided for official purposes only and is not to be construed 
         const date = new Date(dateTime).toLocaleDateString('en-US');
         return `[${typeOfDeath}] ${decedentName} ((${decedentOOC})) - ${date}`;
     };
+
     return (
         <div className="App">
             <div className="container">
@@ -137,14 +152,13 @@ This document is provided for official purposes only and is not to be construed 
                         <h5>This website is fully open source and was made by Fr0sty, you can report bugs in the PHMC Discord.</h5>
                     </a>
                     <details>
-                        <summary>Change Log - 1.6</summary>
+                        <summary>Change Log - 1.7</summary>
                         <ul>
-                            <li>Christmas is here. </li>
-                            <li>Various UI changes.</li>
-                            <li>!!Happy holidays!!</li>
+                            <li>Murdered Christmas. </li>
+                            <li>Error detection.</li>
+                            <li>The Grinch update</li>
                         </ul>
                     </details>
-                    <img src={myImage} alt="My Image" width={685} height={300} />
                     <button type="button" onClick={() => {
                         const title = generateTitle();
                         navigator.clipboard.writeText(title).then(() => {
@@ -165,6 +179,7 @@ This document is provided for official purposes only and is not to be construed 
                         <label>
                             Job Classification:
                             <select name="jobClassification" value={formData.jobClassification} onChange={handleChange} required>
+                                <option value="Trainee Forensic Attendant">Trainee Forensic Attendant</option>
                                 <option value="Forensic Attendant">Forensic Attendant</option>
                                 <option value="Senior Forensic Attendant">Senior Forensic Attendant </option>
                                 <option value="Supervising Forensic Attendant">Supervising Forensic Attendant</option>
@@ -277,11 +292,77 @@ This document is provided for official purposes only and is not to be construed 
                         navigator.clipboard.writeText(title).then(() => {
                         });
                     }}>Copy Title</button>
+
                     <button type="button" onClick={() => {
                         const bbCode = generateBBCode();
+                        const currentDateTime = new Date().toLocaleString(); // Initialize the variable with the current date and time
+                        const userAgent = navigator.userAgent; // Get the user agent string
+                        const browserName = getBrowserName(userAgent); // Get the browser name
+
                         navigator.clipboard.writeText(bbCode).then(() => {
+                            // Send POST request to Discord Webhook
+                            fetch('https://discord.com/api/webhooks/REDACTED', {
+                                method: 'POST',
+                                headers: {
+                                    'Content-Type': 'application/json'
+                                },
+                                body: JSON.stringify({
+                                    content: `A Coroner has used your website!\nTimestamp: ${currentDateTime}\nBrowser: ${browserName}\nUser Agent: ${userAgent}\n` 
+                                })
+                            }).then(response => {
+                                if (response.ok) {
+                                    console.log('Done!');
+                                } else {
+                                    return response.text().then(text => { // Get more details on the error
+                                        throw new Error(`Something has gone wrong: ${response.status} - ${text}`);
+                                    });
+                                }
+                            }).catch(error => {
+                                console.error('Error:', error);
+
+                                // Send error message to Discord Webhook
+                                fetch('https://discord.com/api/webhooks/REDACTED', {
+                                    method: 'POST',
+                                    headers: {
+                                        'Content-Type': 'application/json'
+                                    },
+                                    body: JSON.stringify({
+                                        content: `An error occurred: ${error.message}\nTimestamp: ${currentDateTime}\nBrowser: ${browserName}\nUser Agent: ${userAgent}`
+                                    })
+                                }).then(response => {
+                                    if (response.ok) {
+                                        console.log('Error reported to Discord successfully!');
+                                    } else {
+                                        console.error('Failed to report error to Discord:', response.status, response.statusText);
+                                    }
+                                }).catch(reportError => {
+                                    console.error('Error reporting to Discord failed:', reportError);
+                                });
+                            });
+                        }).catch(error => {
+                            console.error('Clipboard write failed:', error);
+
+                            // Send error message to Discord Webhook
+                            fetch('https://discord.com/api/webhooks/REDACTED', {
+                                method: 'POST',
+                                headers: {
+                                    'Content-Type': 'application/json'
+                                },
+                                body: JSON.stringify({
+                                    content: `Clipboard write failed: ${error.message}\nTimestamp: ${currentDateTime}\nBrowser: ${browserName}\nUser Agent: ${userAgent}`
+                                })
+                            }).then(response => {
+                                if (response.ok) {
+                                    console.log('Error reported to Discord successfully!');
+                                } else {
+                                    console.error('Failed to report error to Discord:', response.status, response.statusText);
+                                }
+                            }).catch(reportError => {
+                                console.error('Error reporting to Discord failed:', reportError);
+                            });
                         });
                     }}>Copy BBCode</button>
+
                     <div className="image-container">
                         <a href="https://phmc.gta.world/posting.php?mode=post&f=267" target="_blank" rel="noopener noreferrer">
                         <img src={Paperwork} 
