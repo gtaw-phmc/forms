@@ -148,15 +148,17 @@ This document is provided for official purposes only and is not to be construed 
             <div className="container">
                 <div className="form-container">
                     <h2>Death Investigation Report Form</h2>
+                    <h5>You can now use the `Install App` feature in the browser!</h5>
                     <a href="https://github.com/LPX-Dev/phmc-death-report/tree/main" target="_blank" rel="noopener noreferrer">
                         <h5>This website is fully open source and was made by Fr0sty, you can report bugs in the PHMC Discord.</h5>
                     </a>
                     <details>
-                        <summary>Change Log - 1.7</summary>
+                        <summary>Change Log - 1.8</summary>
                         <ul>
                             <li>Murdered Christmas. </li>
                             <li>Error detection.</li>
                             <li>The Grinch update</li>
+                            <li>NEW: Added App Support</li>
                         </ul>
                     </details>
                     <button type="button" onClick={() => {
