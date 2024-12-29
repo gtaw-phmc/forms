@@ -157,7 +157,7 @@ This document is provided for official purposes only and is not to be construed 
                         <ul>
                             <li>Murdered Christmas. </li>
                             <li>Error detection.</li>
-                            <li>The Grinch update</li>
+                            <li>The Grinch update.</li>
                             <li>NEW: Added App Support</li>
                         </ul>
                     </details>
