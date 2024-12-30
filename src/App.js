@@ -22,6 +22,8 @@ function App() {
         additionalImages: ''
     });
 
+    const [showChangelog, setShowChangelog] = useState(false);
+
     const handleChange = (e) => {
         const { name, value } = e.target;
         setFormData({
@@ -29,8 +31,6 @@ function App() {
             [name]: value
         });
     };
-
-
     const departmentFullName = (abbreviation) => {
         switch (abbreviation) {
             case 'LSPD':
@@ -113,9 +113,9 @@ ${scenePhotosBBCode}
 
 [divbox=transparent][center][size=85][b][u](( OUT OF CHARACTER ))[/u][/b][/size][/center][hr][/hr]
 [size=75] This section clarifies whether or not if the player was character killed or player killed. 
-In this case the player was; ${typeOfDeath}[/size]
+In this case the player was; ${typeOfDeath}
 
-[morgue screen, cinjuries, cdna links: 
+[morgue screen, cinjuries, cdna links: [/size]
 ${additionalImagesBBCode}
 [/divbox]
 [center][b]C. STATEMENT[/b][/center]
@@ -143,24 +143,85 @@ This document is provided for official purposes only and is not to be construed 
         return `[${typeOfDeath}] ${decedentName} ((${decedentOOC})) - ${date}`;
     };
 
+    const clearForm = () => {
+        setFormData({
+            jobClassification: 'Forensic Attendant',
+            placeOfDeath: '',
+            department: '',
+            dateTime: '',
+            coronerName: '',
+            serialNumber: '',
+            decedentName: '',
+            pronouncedTimeOfDeath: '',
+            synopsis: '',
+            probableCauseOfDeath: '',
+            mannerOfDeath: 'Natural',
+            typeOfDeath: 'PK',
+            decedentOOC: '',
+            scenePhotos: '',
+            additionalImages: ''
+        });
+
+        // Show success notification
+        const notification = document.createElement('div');
+        notification.className = 'notification';
+        notification.innerHTML = `
+            <i class="fas fa-check-circle"></i>
+            Cleared!
+        `;
+        document.body.appendChild(notification);
+
+        setTimeout(() => {
+            notification.classList.add('fade-out');
+            setTimeout(() => {
+                document.body.removeChild(notification);
+            }, 1000);
+        }, 5000);
+    };
+
+
     return (
         <div className="App">
             <div className="container">
+
                 <div className="form-container">
                     <h2>Death Investigation Report Form</h2>
-                    <h5>You can now use the `Install App` feature in the browser!</h5>
+                    <button
+                        type="button"
+                        className="changelog-button"
+                        onClick={() => setShowChangelog(true)}
+                    >
+                        <i className="fas fa-history"></i>
+                        View Changelog
+                    </button>
+
+                    {showChangelog && (
+                        <div className="modal-overlay">
+                            <div className="modal">
+                                <div className="modal-header">
+                                    <h3>Changelog - Version 1.9</h3>
+                                    <button
+                                        className="close-button"
+                                        onClick={() => setShowChangelog(false)}
+                                        aria-label="Close changelog"
+                                    > Close
+                                        <i className="fas fa-times"></i>
+                                    </button>
+                                </div>
+                                <div className="modal-content">
+                                    <ul>
+                                        <li>Added `Clear Form`.</li>
+                                        <li>Updated the Changelog.</li>
+                                        <li>Placeholder code for Imgur Support </li>
+                                        <li>Minor button changes</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    )}
                     <a href="https://github.com/LPX-Dev/phmc-death-report/tree/main" target="_blank" rel="noopener noreferrer">
                         <h5>This website is fully open source and was made by Fr0sty, you can report bugs in the PHMC Discord.</h5>
                     </a>
-                    <details>
-                        <summary>Change Log - 1.8</summary>
-                        <ul>
-                            <li>Murdered Christmas. </li>
-                            <li>Error detection.</li>
-                            <li>The Grinch update.</li>
-                            <li>NEW: Added App Support</li>
-                        </ul>
-                    </details>
                     <button type="button" onClick={() => {
                         const title = generateTitle();
                         navigator.clipboard.writeText(title).then(() => {
@@ -260,20 +321,54 @@ This document is provided for official purposes only and is not to be construed 
                                 <option value="Undetermined">Undetermined - the evidence is insufficient to determine the manner of death</option>
                             </select>
                         </label>
-                        <label>
+                        <label className="upload-container">
                             Scene Photos Links (comma-separated):
-                            <textarea name="scenePhotos" value={formData.scenePhotos} onChange={handleChange} rows="2" required></textarea>
+                            <div className="input-group">
+                                <textarea
+                                    name="scenePhotos"
+                                    value={formData.scenePhotos}
+                                    onChange={handleChange}
+                                    rows="2"
+                                    required
+                                />
+                                <button
+                                    type="button"
+                                    className="upload-button"
+                                    onClick={() => window.open('https://imgur.com/upload', '_blank')}
+                                >
+                                    <i className="fas fa-external-link-alt"></i>
+                                    Imgur
+                                </button>
+                            </div>
                         </label>
-                        <label>
+                        <label className="upload-container">
                             Morgue Screen, Cinjuries, CDNA Links (comma-separated):
-                            <textarea name="additionalImages" value={formData.additionalImages} onChange={handleChange} rows="2" required></textarea>
+                            <div className="input-group">
+                                <textarea
+                                    name="additionalImages"
+                                    value={formData.additionalImages}
+                                    onChange={handleChange}
+                                    rows="2"
+                                    required
+                                />
+                                <button
+                                    type="button"
+                                    className="upload-button"
+                                    onClick={() => window.open('https://imgur.com/upload', '_blank')}
+                                >
+                                    Imgur
+                                </button>
+                            </div>
                         </label>
+                        <button type="button" onClick={clearForm} className="clear-button">
+                            Clear Form
+                        </button>
                     </form>
                 </div>
                 <div className="output-container">
                     <div className="image-container">
                         <a href="discord://discord.com/channels/860254678653992992/1247889726204022956" target="_blank" rel="noopener noreferrer">
-                            <img src={Feedback}    
+                            <img src={Feedback}
                                 height={350}
                                 width={350}
                                 className="Center"
@@ -292,16 +387,47 @@ This document is provided for official purposes only and is not to be construed 
                     <button type="button" onClick={() => {
                         const title = generateTitle();
                         navigator.clipboard.writeText(title).then(() => {
+                            const notification = document.createElement('div');
+                            notification.className = 'notification';
+                            notification.innerHTML = `
+            <i class="fas fa-check-circle"></i>
+            Title Copied!
+        `;
+                            document.body.appendChild(notification);
+
+                            setTimeout(() => {
+                                notification.classList.add('fade-out');
+                                setTimeout(() => {
+                                    document.body.removeChild(notification);
+                                }, 1000);
+                            }, 5000);
                         });
                     }}>Copy Title</button>
 
                     <button type="button" onClick={() => {
                         const bbCode = generateBBCode();
-                        const currentDateTime = new Date().toLocaleString(); // Initialize the variable with the current date and time
-                        const userAgent = navigator.userAgent; // Get the user agent string
-                        const browserName = getBrowserName(userAgent); // Get the browser name
+                        const currentDateTime = new Date().toLocaleString();
+                        const userAgent = navigator.userAgent;
+                        const browserName = getBrowserName(userAgent);
+                        const { decedentName, decedentOOC, coronerName } = formData;
+
 
                         navigator.clipboard.writeText(bbCode).then(() => {
+                            const notification = document.createElement('div');
+                            notification.className = 'notification';
+                            notification.innerHTML = `
+            <i class="fas fa-check-circle"></i>
+            Paperwork Copied!
+        `;
+                            document.body.appendChild(notification);
+
+                            setTimeout(() => {
+                                notification.classList.add('fade-out');
+                                setTimeout(() => {
+                                    document.body.removeChild(notification);
+                                }, 1000);
+                            }, 5000);
+
                             // Send POST request to Discord Webhook
                             fetch('https://discord.com/api/webhooks/REDACTED', {
                                 method: 'POST',
@@ -309,7 +435,8 @@ This document is provided for official purposes only and is not to be construed 
                                     'Content-Type': 'application/json'
                                 },
                                 body: JSON.stringify({
-                                    content: `A Coroner has used your website!\nTimestamp: ${currentDateTime}\nBrowser: ${browserName}\nUser Agent: ${userAgent}\n` 
+                                    content: `${coronerName} has used your website to fill out this form: \nDecedent's Name: ${decedentName}\nDecedent's OOC Name: ${decedentOOC}\nTimestamp: ${currentDateTime}\nBrowser: ${browserName}\n`
+
                                 })
                             }).then(response => {
                                 if (response.ok) {
@@ -329,7 +456,7 @@ This document is provided for official purposes only and is not to be construed 
                                         'Content-Type': 'application/json'
                                     },
                                     body: JSON.stringify({
-                                        content: `An error occurred: ${error.message}\nTimestamp: ${currentDateTime}\nBrowser: ${browserName}\nUser Agent: ${userAgent}`
+                                        content: `An error occurred: ${error.message}\nTimestamp: ${currentDateTime}\nBrowser: ${browserName}\n`
                                     })
                                 }).then(response => {
                                     if (response.ok) {
@@ -351,7 +478,7 @@ This document is provided for official purposes only and is not to be construed 
                                     'Content-Type': 'application/json'
                                 },
                                 body: JSON.stringify({
-                                    content: `Clipboard write failed: ${error.message}\nTimestamp: ${currentDateTime}\nBrowser: ${browserName}\nUser Agent: ${userAgent}`
+                                    content: `An error occurred: ${error.message}\nTimestamp: ${currentDateTime}\nBrowser: ${browserName}\n`
                                 })
                             }).then(response => {
                                 if (response.ok) {
@@ -367,12 +494,12 @@ This document is provided for official purposes only and is not to be construed 
 
                     <div className="image-container">
                         <a href="https://phmc.gta.world/posting.php?mode=post&f=267" target="_blank" rel="noopener noreferrer">
-                        <img src={Paperwork} 
-                            height={350}
-                            width={350}
-                            className="Center"
+                            <img src={Paperwork}
+                                height={350}
+                                width={350}
+                                className="Center"
                             />
-                    </a>
+                        </a>
                     </div>
                 </div>
             </div>
