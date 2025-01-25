@@ -1,0 +1,43 @@
+{
+  "files": {
+    "main.css": "/forms/static/css/main.4fdc315f.css",
+    "main.js": "/forms/static/js/main.70292edb.js",
+    "static/js/488.4d5d6563.chunk.js": "/forms/static/js/488.4d5d6563.chunk.js",
+    "static/media/fa-solid-900.ttf": "/forms/static/media/fa-solid-900.2582b0e4bcf85eceead0.ttf",
+    "static/media/lssd.png": "/forms/static/media/lssd.88defbb73fea92316814.png",
+    "static/media/fa-brands-400.ttf": "/forms/static/media/fa-brands-400.1815e00441357e01619e.ttf",
+    "static/media/fa-solid-900.woff2": "/forms/static/media/fa-solid-900.2463b90d9a316e4e5294.woff2",
+    "static/media/fa-brands-400.woff2": "/forms/static/media/fa-brands-400.c210719e60948b211a12.woff2",
+    "static/media/lsfd.png": "/forms/static/media/lsfd.369fffd0ce7b41b0a860.png",
+    "static/media/fa-regular-400.ttf": "/forms/static/media/fa-regular-400.914997e1bdfc990d0897.ttf",
+    "static/media/gynecology.png": "/forms/static/media/gynecology.46a99d12b6667d8c244c.png",
+    "static/media/dentist.png": "/forms/static/media/dentist.3e26440a41eafb8deb55.png",
+    "static/media/psychology.png": "/forms/static/media/psychology.b5a0f9f3a5bb958a744c.png",
+    "static/media/nurse.png": "/forms/static/media/nurse.a674313b9e9023fe3db8.png",
+    "static/media/maternity.png": "/forms/static/media/maternity.ce850d9570774f5a350e.png",
+    "static/media/myPaperwork2.png": "/forms/static/media/myPaperwork2.d2d61eeb95f05e33b36f.png",
+    "static/media/gyne.png": "/forms/static/media/gyne.677ba37c0ccd59c48d14.png",
+    "static/media/lspd.png": "/forms/static/media/lspd.330707fe65d8615fe7ee.png",
+    "static/media/corpse.png": "/forms/static/media/corpse.47e6df033fcd2be7b205.png",
+    "static/media/noshow.png": "/forms/static/media/noshow.d96e843eaa2274e1ec9b.png",
+    "static/media/email.png": "/forms/static/media/email.d27389667b81e4a5c88c.png",
+    "static/media/surgeon.png": "/forms/static/media/surgeon.8aba086c14cf65551439.png",
+    "static/media/empathy.png": "/forms/static/media/empathy.33486fe20ca790e3a176.png",
+    "static/media/mentalhealth.png": "/forms/static/media/mentalhealth.34f0a61fcaeaf63f5c07.png",
+    "static/media/fa-regular-400.woff2": "/forms/static/media/fa-regular-400.89999bdf5d835c012025.woff2",
+    "static/media/application.png": "/forms/static/media/application.3e3782824815d01c05bd.png",
+    "static/media/phmc.png": "/forms/static/media/phmc.9d5854886cbaba13deb8.png",
+    "static/media/feedback.png": "/forms/static/media/feedback.c91c80a0df0a044ce8ad.png",
+    "static/media/obstetrical.png": "/forms/static/media/obstetrical.cc42d2e1575f6e1fef02.png",
+    "static/media/fa-v4compatibility.ttf": "/forms/static/media/fa-v4compatibility.da94ef451f4969af06e6.ttf",
+    "static/media/fa-v4compatibility.woff2": "/forms/static/media/fa-v4compatibility.ea8f94e1d22e0d35ccd4.woff2",
+    "index.html": "/forms/index.html",
+    "main.4fdc315f.css.map": "/forms/static/css/main.4fdc315f.css.map",
+    "main.70292edb.js.map": "/forms/static/js/main.70292edb.js.map",
+    "488.4d5d6563.chunk.js.map": "/forms/static/js/488.4d5d6563.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.4fdc315f.css",
+    "static/js/main.70292edb.js"
+  ]
+}
