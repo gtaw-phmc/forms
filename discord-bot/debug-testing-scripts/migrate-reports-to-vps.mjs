@@ -9,6 +9,7 @@ import { readFileSync, existsSync } from 'node:fs';
 import { resolve } from 'node:path';
 import { initializeApp, cert } from 'firebase-admin/app';
 import { getDatabase } from 'firebase-admin/database';
+import { firstApiKey } from '../services/apiKeyUtil.js';
 
 function loadEnvFile(path) {
     if (!existsSync(path)) return;
@@ -29,7 +30,7 @@ loadEnvFile(resolve(process.cwd(), '../functions/.env'));
 const apply = process.argv.includes('--apply');
 const databaseURL = process.env.FIREBASE_DATABASE_URL || 'https://gtaw-forms-default-rtdb.europe-west1.firebasedatabase.app';
 const apiURL = (process.env.MORGUE_API_URL || 'http://88.208.243.254').replace(/\/$/, '');
-const apiKey = process.env.MORGUE_API_KEY || (process.env.MORGUE_API_KEYS || '').split(',')[0].trim();
+const apiKey = process.env.MORGUE_API_KEY || firstApiKey(process.env.MORGUE_API_KEYS);
 const keyPath = resolve(process.cwd(), process.env.FIREBASE_ADMIN_KEY_PATH || '../firebase-admin-key.json');
 
 if (!apiKey && apply) throw new Error('MORGUE_API_KEY or MORGUE_API_KEYS is required for --apply.');

@@ -6,12 +6,13 @@
  * baseUrl defaults to localhost:3001; pass https://...:3001 to test public path.
  */
 import fs from 'fs';
+import { firstApiKey } from '../services/apiKeyUtil.js';
 
 const base = process.argv[2] || 'http://localhost:3001';
-const key = (fs.readFileSync('.env', 'utf8').split('\n')
+const key = firstApiKey((fs.readFileSync('.env', 'utf8').split('\n')
     .map(l => l.trim())
     .find(l => l.startsWith('MORGUE_API_KEYS=')) || '')
-    .slice('MORGUE_API_KEYS='.length).split(',')[0].trim();
+    .slice('MORGUE_API_KEYS='.length));
 
 if (!key) { console.error('[ERR] no MORGUE_API_KEYS in .env'); process.exit(1); }
 
