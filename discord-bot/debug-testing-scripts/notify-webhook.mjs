@@ -37,8 +37,11 @@
 import { readFileSync, existsSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
 
-const WEBHOOK_URL = process.env.NOTIFY_WEBHOOK_URL
-    || 'https://discord.com/api/webhooks/REDACTED';
+const WEBHOOK_URL = process.env.NOTIFY_WEBHOOK_URL || '';
+if (!WEBHOOK_URL) {
+    console.error('[NOTIFY] Refusing to run: NOTIFY_WEBHOOK_URL is not set. Webhook URLs are never hardcoded (see AGENTS.md).');
+    process.exit(1);
+}
 const DEFAULT_USER_ID = process.env.NOTIFY_USER_ID || '228306972204597248';
 const USERNAME = process.env.NOTIFY_USERNAME || 'PHMC Notify';
 const DEFAULT_MAPPING = fileURLToPath(new URL('./discord-mappings.json', import.meta.url));
